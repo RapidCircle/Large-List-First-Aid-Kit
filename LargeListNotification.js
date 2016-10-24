@@ -20,7 +20,7 @@ define(['jquery'], function(jQuery) {
         {
             type: 0,
             view_name: "Most Recent",
-            query: "<OrderBy><FieldRef Name='ID' Ascending='FALSE' /></OrderBy>"
+            query: ""
         }, {
             type: 1,
             view_name: "Last Week",
@@ -29,6 +29,10 @@ define(['jquery'], function(jQuery) {
             type: 2,
             view_name: "Last 30 days",
             query: "<Where><Geq><FieldRef Name='Modified' /><Value Type='DateTime'><Today OffsetDays='-30' /></Value></Geq></Where>"
+        }, {
+            type: 3,
+            view_name: "My Documents",
+            query: "<Where><Or><Eq><FieldRef Name='Author'/><Value Type='Integer'><UserID Type='Integer' /></Value></Eq><Eq><FieldRef Name='Editor'/><Value Type='Integer'><UserID Type='Integer' /></Value></Eq></Or></Where>"
         }
     ];
     RC.Helpers = (function() {
@@ -66,7 +70,23 @@ define(['jquery'], function(jQuery) {
             });
             return dfd.promise();
         }
-        return {GetView: GetView, CheckPermissions: CheckPermissions}
+
+        function GetIndexedColumns() {
+            var deferred = jQuery.Deferred();
+            jQuery.ajax({
+                url: _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/fields?$filter=Indexed eq true&" + options.OData,
+                type: 'GET',
+                headers: {
+                    "accept": "application/json;odata=verbose"
+                }
+            }).done(function(data) {
+                deferred.resolve(data);
+            }).fail(function(err) {
+                deferred.reject(err);
+            })
+            return deferred.promise();
+        }
+        return {GetView: GetView, CheckPermissions: CheckPermissions, GetIndexedColumns: GetIndexedColumns}
     })();
 
     RC.Services = (function() {
@@ -295,7 +315,7 @@ define(['jquery'], function(jQuery) {
                 return item.indexOf(large_list_string) >= 0;
             });
             if (items.length > 0) {
-                statusID = SP.UI.Status.addStatus("Warning:", "Your view contains too many items (> 5,000 items) and so can't be displayed. <a href='#'>More information</a>. <a href='#' onclick='javascript: RC.Controller.RedirectToModifyView()'>Modify the view</a>, or create a new one: <a href='#' onclick='javascript:RC.Controller.CreateView(0)'>Most Recent</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(1)'>Last 7 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(2)'>Last 30 days</a>.");
+                statusID = SP.UI.Status.addStatus("Warning:", "Your view contains too many items (> 5,000 items) and so can't be displayed. <a href='#'>More information</a>. <a href='#' onclick='javascript: RC.Controller.RedirectToModifyView()'>Modify the view</a>, or create a new one: <a href='#' onclick='javascript:RC.Controller.CreateView(0)'>Most Recent</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(1)'>Last 7 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(2)'>Last 30 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(3)'>My Documents</a>.");
                 SP.UI.Status.setStatusPriColor(statusID, 'yellow');
             }
         }, 'sp.js');
