@@ -1,8 +1,0 @@
-define([], function() {
-    var ErrorViewCreation = "There was a problem creating the view.";
-    var ErrorRetrievingValues = "Error retrieving values.";
-    var ErrorInsufficientPermission = "You do not have enough permissions to perform this action.";
-    var NotificationMessageForLibrary = "Your view contains too many items (> 5,000 items) and so can't be displayed. <a href='#'>More information</a>. <a href='#' onclick='javascript: RC.Controller.RedirectToModifyView()'>Modify the view</a>, or create a new one: <a href='#' onclick='javascript:RC.Controller.CreateView(0)'>Most Recent</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(1)'>Last 7 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(2)'>Last 30 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(3)'>My Documents</a>.";
-    var NotificationMessageForList = "Your view contains too many items (> 5,000 items) and so can't be displayed. <a href='#'>More information</a>. <a href='#' onclick='javascript: RC.Controller.RedirectToModifyView()'>Modify the view</a>, or create a new one: <a href='#' onclick='javascript:RC.Controller.CreateView(0)'>Most Recent</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(1)'>Last 7 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(2)'>Last 30 days</a>, <a href='#' onclick='javascript:RC.Controller.CreateView(4)'>My Items</a>."
-    return {ErrorViewCreation: ErrorViewCreation, ErrorRetrievingValues: ErrorRetrievingValues, ErrorInsufficientPermission: ErrorInsufficientPermission, NotificationMessageForList: NotificationMessageForList, NotificationMessageForLibrary: NotificationMessageForLibrary}
-})

@@ -66,25 +66,6 @@ define(['jquery'], function($) {
         return deferred.promise();
     }
 
-    function CheckPermissions(permissions_array) {
-        var dfd = jQuery.Deferred();
-        var ctx = new SP.ClientContext.get_current();
-        var web = ctx.get_web();
-        var ob = new SP.BasePermissions();
-        for (var i = 0; i < permissions_array.length; i++) {
-            //ob.set(SP.PermissionKind.manageWeb)
-            ob.set(permissions_array[i]);
-        }
-        var per = web.doesUserHavePermissions(ob)
-        ctx.executeQueryAsync(function() {
-            var isAllowed = per.get_value();
-            dfd.resolve(isAllowed)
-        }, function(a, b) {
-            dfd.reject(b.get_message());
-        });
-        return dfd.promise();
-    }
-
     function GetIndexedColumns(options) {
         var deferred = jQuery.Deferred();
         jQuery.ajax({
@@ -117,11 +98,5 @@ define(['jquery'], function($) {
         return deferred.promise();
     }
 
-    function CreateView() {
-        var deferred = jQuery.Deferred();
-
-        return deferred.promise();
-    }
-
-    return {GetView: GetView, CheckPermissions: CheckPermissions, GetIndexedColumns: GetIndexedColumns, GetList: GetList, AddView: AddView}
+    return {GetView: GetView, GetIndexedColumns: GetIndexedColumns, GetList: GetList, AddView: AddView}
 })

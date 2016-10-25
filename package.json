@@ -1,0 +1,27 @@
+{
+  "name": "sp-large-list-health-kit",
+  "version": "1.0.0",
+  "description": "A notification on a SharePoint large list that allows users to create custom views using JSOM",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RapidCircle/SharePoint-Large-List-Notification.git"
+  },
+  "keywords": [
+    "Sharepoint",
+    "View",
+    "Threshold"
+  ],
+  "author": "Tanmay Dharmaraj",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RapidCircle/SharePoint-Large-List-Notification/issues"
+  },
+  "homepage": "https://github.com/RapidCircle/SharePoint-Large-List-Notification#readme",
+  "devDependencies": {
+    "gulp-spsync-creds": "^2.2.6"
+  }
+}

@@ -8,22 +8,21 @@
 requirejs.config({
     //By default load any module IDs from js/lib
     baseUrl: '/sites/dmc/siteassets/largelistnotification',
-    //except, if the module ID starts with "app",
-    //load it from the js/app directory. paths
-    //config is relative to the baseUrl, and
-    //never includes a ".js" extension since
-    //the paths config could be for a directory.
     paths: {
         jquery: 'https://code.jquery.com/jquery-2.2.4.min'
     }
 });
 
 define([
-    'jquery', 'RC.Helpers', 'RC.Constants', 'RC.Messages', 'RC.Controller'
-], function(jQuery, Helpers, Constants, Messages, Controller) {
+    'jquery', 'services/ListService', 'Constants', 'Controller'
+], function(jQuery, ListService, Constants, Controller) {
+
+    //expose the controller. The anchor tag contains click events that call the controller.
     var RC = RC || {};
     RC.Controller = Controller;
     window.RC = RC;
+
+    //Show the notification message on the page.
     ExecuteOrDelayUntilScriptLoaded(function() {
         SP.UI.Status.removeAllStatus(true);
         //Improve this if you are handling multiple locales
@@ -35,12 +34,12 @@ define([
             return item.indexOf(large_list_string) >= 0;
         });
         if (items.length > 0) {
-            Helpers.GetList({ListId: _spPageContextInfo.pageListId, OData: "$select=BaseType"}).done(function(data) {
+            ListService.GetList({ListId: _spPageContextInfo.pageListId, OData: "$select=BaseType"}).done(function(data) {
                 if (data.d.BaseType == Constants.SPBaseType.DocumentLibrary) {
-                    var statusID = SP.UI.Status.addStatus("Warning:", Messages.NotificationMessageForLibrary);
+                    var statusID = SP.UI.Status.addStatus("Warning:", Constants.Messages.NotificationMessageForLibrary);
                     SP.UI.Status.setStatusPriColor(statusID, 'yellow');
                 } else {
-                    var statusID = SP.UI.Status.addStatus("Warning:", Messages.NotificationMessageForList);
+                    var statusID = SP.UI.Status.addStatus("Warning:", Constants.Messages.NotificationMessageForList);
                     SP.UI.Status.setStatusPriColor(statusID, 'yellow');
                 }
             }).fail(function(err) {
