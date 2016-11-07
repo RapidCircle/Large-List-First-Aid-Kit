@@ -1,7 +1,6 @@
 define([
     'Services/SearchService', 'Services/ListService', 'templates/tpl',
-    /*'datatables'*/
-    'ko',
+    'knockout',
     'jquery',
     'listjs',
     'listjsPagination'
@@ -13,13 +12,19 @@ define([
         var self = this;
         self.table_data = ko.observableArray([]);
         self.table_data_headers = ko.observableArray([]);
-        
+
         self.table_heading = ko.observable("Results");
         self.current_page = ko.observable();
 
         self.SearchTable = function() {
-            SearchService.GetManagedProperties({ContentType: "item", ListId: _spPageContextInfo.pageListId}).done(function(managed_properties) {
-                ListService.GetView({ListId: _spPageContextInfo.pageListId, OData: "$filter=DefaultView eq true&$expand=ViewFields"}).done(function(data) {
+            SearchService.GetManagedProperties({
+                ContentType: "item",
+                ListId: _spPageContextInfo.pageListId
+            }).done(function(managed_properties) {
+                ListService.GetView({
+                    ListId: _spPageContextInfo.pageListId,
+                    OData: "$filter=DefaultView eq true&$expand=ViewFields"
+                }).done(function(data) {
                     var default_view_fields = data.d.results[0].ViewFields.Items.results;
                     var refiners = managed_properties.map(function(elem) {
                         return elem.RefinementName
@@ -53,9 +58,9 @@ define([
                             var currentitem = data.d.postquery.PrimaryQueryResult.RelevantResults.Table.Rows.results[i].Cells.results;
                             var current_item_object_for_datatable = {}
                             for (var j = 0; j < currentitem.length; j++) {
-                                current_item_object_for_datatable[currentitem[j].Key] = currentitem[j].Value
-                                    ? currentitem[j].Value
-                                    : "(no data)";
+                                current_item_object_for_datatable[currentitem[j].Key] = currentitem[j].Value ?
+                                    currentitem[j].Value :
+                                    "(no data)";
                             }
                             dataSet.push(current_item_object_for_datatable);
                         }

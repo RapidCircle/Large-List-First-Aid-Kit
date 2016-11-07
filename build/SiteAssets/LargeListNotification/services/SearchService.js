@@ -53,7 +53,7 @@ define(['jquery'], function($) {
     SearchService.GetManagedProperties = function(options) {
         var dfd = $.Deferred();
         $.ajax({
-            url: _spPageContextInfo.siteAbsoluteUrl + "/_api/search/query?querytext='contenttype:"+ options.ContentType+ "+ListId:" + options.ListId + "'",
+            url: _spPageContextInfo.siteAbsoluteUrl + "/_api/search/query?querytext='contenttype:" + options.ContentType + "+ListId:" + options.ListId + "'",
             type: "get",
             headers: {
                 "accept": "application/json;odata=verbose",

@@ -1,11 +1,9 @@
 define(function() {
     var Constants = {};
-    Constants.ThresholdMessage = [
-        {
-            locale: 1033,
-            error: "This view cannot be displayed because it exceeds the list view threshold (5000 items) enforced by the administrator."
-        }
-    ];
+    Constants.ThresholdMessage = [{
+        locale: 1033,
+        error: "This view cannot be displayed because it exceeds the list view threshold (5000 items) enforced by the administrator."
+    }];
     Constants.SPBaseType = {
         UnspecifiedBaseType: -1,
         GenericList: 0,

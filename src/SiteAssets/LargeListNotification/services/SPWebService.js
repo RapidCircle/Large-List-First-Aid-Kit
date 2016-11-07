@@ -47,5 +47,7 @@ define(['jquery'], function($) {
         return dfd.promise();
     }
 
-    return {CheckPermissions: CheckPermissions}
+    return {
+        CheckPermissions: CheckPermissions
+    }
 })

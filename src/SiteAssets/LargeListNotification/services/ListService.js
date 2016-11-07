@@ -26,6 +26,7 @@ define(['jquery'], function($) {
         }
         return dfd.promise();
     };
+
     function GetView(options) {
         var deferred = jQuery.Deferred();
         jQuery.ajax({
@@ -97,5 +98,10 @@ define(['jquery'], function($) {
         return deferred.promise();
     }
 
-    return {GetView: GetView, GetIndexedColumns: GetIndexedColumns, GetList: GetList, AddView: AddView}
+    return {
+        GetView: GetView,
+        GetIndexedColumns: GetIndexedColumns,
+        GetList: GetList,
+        AddView: AddView
+    }
 })

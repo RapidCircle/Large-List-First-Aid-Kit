@@ -23,7 +23,10 @@ define([
                 }
             }
 
-            ListService.GetView({ListId: _spPageContextInfo.pageListId, OData: "$filter=DefaultView eq true&$expand=ViewFields"}).done(function(data) {
+            ListService.GetView({
+                ListId: _spPageContextInfo.pageListId,
+                OData: "$filter=DefaultView eq true&$expand=ViewFields"
+            }).done(function(data) {
                 var default_view_fields = data.d.results[0].ViewFields.SchemaXml;
                 var bodyContent = {};
                 bodyContent.__metadata = {
@@ -40,7 +43,10 @@ define([
                     bodyContent.Scope = Constants.ViewScope.RecursiveAll;
                 }
 
-                ListService.AddView({ListId: _spPageContextInfo.pageListId, bodyContent: JSON.stringify(bodyContent)}).done(function(data) {
+                ListService.AddView({
+                    ListId: _spPageContextInfo.pageListId,
+                    bodyContent: JSON.stringify(bodyContent)
+                }).done(function(data) {
                     ListService.GetView({
                         ListId: _spPageContextInfo.pageListId,
                         OData: "$select=ServerRelativeUrl,Id&$filter=Title eq '" + options.view_configuration.view_name + "'"
@@ -82,11 +88,24 @@ define([
                         break;
                     }
                 }
-                ListService.GetList({ListId: _spPageContextInfo.pageListId, OData: "$select=BaseType"}).done(function(data) {
+                ListService.GetList({
+                    ListId: _spPageContextInfo.pageListId,
+                    OData: "$select=BaseType"
+                }).done(function(data) {
                     if (data.d.BaseType == Constants.SPBaseType.DocumentLibrary) {
-                        CreateViewHelper({Type: 0, PersonalView: false, view_configuration: view_configuration, isLibrary: true})
+                        CreateViewHelper({
+                            Type: 0,
+                            PersonalView: false,
+                            view_configuration: view_configuration,
+                            isLibrary: true
+                        })
                     } else {
-                        CreateViewHelper({Type: 0, PersonalView: false, view_configuration: view_configuration, isLibrary: false})
+                        CreateViewHelper({
+                            Type: 0,
+                            PersonalView: false,
+                            view_configuration: view_configuration,
+                            isLibrary: false
+                        })
                     }
                 }).fail(function(err) {
                     console.error(err)
@@ -102,11 +121,24 @@ define([
                             }
                         }
 
-                        ListService.GetList({ListId: _spPageContextInfo.pageListId, OData: "$select=BaseType"}).done(function(data) {
+                        ListService.GetList({
+                            ListId: _spPageContextInfo.pageListId,
+                            OData: "$select=BaseType"
+                        }).done(function(data) {
                             if (data.d.BaseType == Constants.SPBaseType.DocumentLibrary) {
-                                CreateViewHelper({Type: 1, PersonalView: true, view_configuration: view_configuration, isLibrary: true})
+                                CreateViewHelper({
+                                    Type: 1,
+                                    PersonalView: true,
+                                    view_configuration: view_configuration,
+                                    isLibrary: true
+                                })
                             } else {
-                                CreateViewHelper({Type: 1, PersonalView: true, view_configuration: view_configuration, isLibrary: true})
+                                CreateViewHelper({
+                                    Type: 1,
+                                    PersonalView: true,
+                                    view_configuration: view_configuration,
+                                    isLibrary: true
+                                })
                             }
                         }).fail(function(err) {
                             console.error(err)
@@ -152,5 +184,8 @@ define([
     }
 
 
-    return {CreateView: CreateView, RedirectToModifyView: RedirectToModifyView}
+    return {
+        CreateView: CreateView,
+        RedirectToModifyView: RedirectToModifyView
+    }
 })
