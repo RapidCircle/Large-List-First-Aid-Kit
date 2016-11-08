@@ -1,6 +1,6 @@
 define([
-    'Services/SPWebService', 'Services/ListService'
-], function(SPWebService, ListService) {
+    'CustomParts/LargeListFirstAidKit/Services/SPWebService', 'CustomParts/LargeListFirstAidKit/Services/ListService', 'CustomParts/LargeListFirstAidKit/Config', 'CustomParts/LargeListFirstAidKit/Constants'
+], function(SPWebService, ListService, Config, Constants) {
     //private abstracted function.
     function CreateViewHelper(options) {
         ListService.GetView({
@@ -78,7 +78,7 @@ define([
     }
 
     function CreateView(requested_view_type) {
-        ListService.CheckPermissions([SP.PermissionKind.manageLists]).done(function(hasPermission) {
+        SPWebService.CheckPermissions([SP.PermissionKind.manageLists]).done(function(hasPermission) {
             //Create default view
             if (hasPermission) {
                 var view_configuration = null;

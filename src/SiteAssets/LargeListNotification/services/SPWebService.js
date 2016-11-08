@@ -9,7 +9,7 @@ define(['jquery'], function($) {
         } else {
             $.ajax({
                 type: "POST",
-                url: _spPageContextInfo.siteAbsoluteUrl + "/_api/contextinfo",
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/contextinfo",
                 headers: {
                     "accept": "application/json;odata=verbose"
                 }
@@ -47,7 +47,5 @@ define(['jquery'], function($) {
         return dfd.promise();
     }
 
-    return {
-        CheckPermissions: CheckPermissions
-    }
+    return {CheckPermissions: CheckPermissions}
 })

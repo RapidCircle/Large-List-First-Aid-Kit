@@ -22,8 +22,12 @@
   },
   "homepage": "https://github.com/RapidCircle/SharePoint-Large-List-Notification#readme",
   "devDependencies": {
+    "gulp-jshint": "^2.0.2",
+    "gulp-minify": "0.0.14",
     "gulp-spsync-creds": "^2.2.6",
-    "gulp-watch": "^4.3.10"
+    "gulp-watch": "^4.3.10",
+    "jshint": "^2.9.4",
+    "jshint-stylish": "^2.2.1"
   },
   "dependencies": {
     "jaml": "^0.1.0"

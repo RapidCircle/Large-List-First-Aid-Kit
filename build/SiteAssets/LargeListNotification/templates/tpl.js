@@ -1,4 +1,4 @@
-define(['vendor/jaml'], function(Jaml) {
+define(['jaml'], function(Jaml) {
     var Templates = {};
     Templates.SearchPage = function() {
         //register the template

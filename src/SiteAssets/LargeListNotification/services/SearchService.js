@@ -9,7 +9,7 @@ define(['jquery'], function($) {
         } else {
             $.ajax({
                 type: "POST",
-                url: _spPageContextInfo.siteAbsoluteUrl + "/_api/contextinfo",
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/contextinfo",
                 headers: {
                     "accept": "application/json;odata=verbose"
                 }
@@ -17,7 +17,6 @@ define(['jquery'], function($) {
                 var now = (new Date()).getTime();
                 self.requestDigest = resp.d.GetContextWebInformation;
                 self.requestDigest.expiresOn = now + (resp.d.GetContextWebInformation.FormDigestTimeoutSeconds * 1000) - 60000; // -60000 To prevent any calls to fail at all, by refreshing a minute before
-                console.log("Token", self.requestDigest.FormDigestValue);
                 dfd.resolve();
             }).fail(function(err) {
                 console.log("Error fetching Request Digest. Some parts won't work.");
@@ -31,7 +30,7 @@ define(['jquery'], function($) {
         var dfd = $.Deferred();
         GetRequestDigest().then(function() {
             $.ajax({
-                url: _spPageContextInfo.siteAbsoluteUrl + "/_api/search/postquery",
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/search/postquery",
                 type: "POST",
                 headers: {
                     "accept": "application/json;odata=verbose",
@@ -53,7 +52,7 @@ define(['jquery'], function($) {
     SearchService.GetManagedProperties = function(options) {
         var dfd = $.Deferred();
         $.ajax({
-            url: _spPageContextInfo.siteAbsoluteUrl + "/_api/search/query?querytext='contenttype:" + options.ContentType + "+ListId:" + options.ListId + "'",
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/search/query?querytext='contenttype:"+ options.ContentType+ "+ListId:" + options.ListId + "'",
             type: "get",
             headers: {
                 "accept": "application/json;odata=verbose",
@@ -72,7 +71,7 @@ define(['jquery'], function($) {
                 //Got workId now.
                 //secret sauce to get all properties back (https://blogs.technet.microsoft.com/searchguys/2013/12/10/how-to-find-all-managed-properties-of-a-document/)
                 $.ajax({
-                    url: _spPageContextInfo.siteAbsoluteUrl + "/_api/search/query?querytext='" + oWorkId.Key + ":" + oWorkId.Value + "'&refiners='ManagedProperties(filter=600/0/*)'",
+                    url: _spPageContextInfo.webAbsoluteUrl + "/_api/search/query?querytext='" + oWorkId.Key + ":" + oWorkId.Value + "'&refiners='ManagedProperties(filter=600/0/*)'",
                     type: "get",
                     headers: {
                         "accept": "application/json;odata=verbose",

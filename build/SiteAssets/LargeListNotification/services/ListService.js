@@ -9,7 +9,7 @@ define(['jquery'], function($) {
         } else {
             $.ajax({
                 type: "POST",
-                url: _spPageContextInfo.siteAbsoluteUrl + "/_api/contextinfo",
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/contextinfo",
                 headers: {
                     "accept": "application/json;odata=verbose"
                 }
@@ -17,7 +17,6 @@ define(['jquery'], function($) {
                 var now = (new Date()).getTime();
                 self.requestDigest = resp.d.GetContextWebInformation;
                 self.requestDigest.expiresOn = now + (resp.d.GetContextWebInformation.FormDigestTimeoutSeconds * 1000) - 60000; // -60000 To prevent any calls to fail at all, by refreshing a minute before
-                console.log("Token", self.requestDigest.FormDigestValue);
                 dfd.resolve();
             }).fail(function(err) {
                 console.log("Error fetching Request Digest. Some parts won't work.");
@@ -26,11 +25,10 @@ define(['jquery'], function($) {
         }
         return dfd.promise();
     };
-
     function GetView(options) {
         var deferred = jQuery.Deferred();
         jQuery.ajax({
-            url: _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/views?" + options.OData,
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/views?" + options.OData,
             type: 'GET',
             headers: {
                 "accept": "application/json;odata=verbose"
@@ -47,7 +45,7 @@ define(['jquery'], function($) {
         var deferred = jQuery.Deferred();
         GetRequestDigest().then(function() {
             jQuery.ajax({
-                url: _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/views",
+                url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/views",
                 method: "POST",
                 data: options.bodyContent,
                 headers: {
@@ -56,7 +54,6 @@ define(['jquery'], function($) {
                     "X-RequestDigest": self.requestDigest.FormDigestValue
                 }
             }).done(function(data) {
-                console.log("View Created", data);
                 deferred.resolve(data);
             }).fail(function(err) {
                 deferred.reject(err);
@@ -69,7 +66,7 @@ define(['jquery'], function($) {
     function GetIndexedColumns(options) {
         var deferred = jQuery.Deferred();
         jQuery.ajax({
-            url: _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/fields?$filter=Indexed eq true&" + options.OData,
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')/fields?$filter=Indexed eq true&" + options.OData,
             type: 'GET',
             headers: {
                 "accept": "application/json;odata=verbose"
@@ -85,7 +82,7 @@ define(['jquery'], function($) {
     function GetList(options) {
         var deferred = jQuery.Deferred();
         jQuery.ajax({
-            url: _spPageContextInfo.siteAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')?" + options.OData,
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists('" + options.ListId + "')?" + options.OData,
             type: 'GET',
             headers: {
                 "accept": "application/json;odata=verbose"
@@ -98,10 +95,5 @@ define(['jquery'], function($) {
         return deferred.promise();
     }
 
-    return {
-        GetView: GetView,
-        GetIndexedColumns: GetIndexedColumns,
-        GetList: GetList,
-        AddView: AddView
-    }
+    return {GetView: GetView, GetIndexedColumns: GetIndexedColumns, GetList: GetList, AddView: AddView}
 })

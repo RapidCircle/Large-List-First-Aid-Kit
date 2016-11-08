@@ -7,12 +7,12 @@
 "use strict";
 define([
     'jquery',
-    'services/ListService',
-    'Constants',
-    'Controller',
-    'Search',
-    'templates/tpl',
-    'css!styles/main.css',
+    'CustomParts/LargeListFirstAidKit/Services/ListService',
+    'CustomParts/LargeListFirstAidKit/Constants',
+    'CustomParts/LargeListFirstAidKit/Controller',
+    'CustomParts/LargeListFirstAidKit/Search',
+    'CustomParts/LargeListFirstAidKit/templates/tpl',
+    'css!CustomParts/LargeListFirstAidKit/styles/main.css',
     'css!//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
 ], function(jQuery, ListService, Constants, NotificationController, SearchController, Templates) {
 
@@ -51,7 +51,7 @@ define([
 
             //Create the search UI
             var deltaplaceholdermain = jQuery.find("#DeltaPlaceHolderMain")
-            $(deltaplaceholdermain).append(Templates.SearchPage());
+            jQuery(deltaplaceholdermain).append(Templates.SearchPage());
             SearchController.Initialize();
         }
     }, 'sp.js');
