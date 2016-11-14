@@ -13,7 +13,7 @@ define([
     'CustomParts/LargeListFirstAidKit/Search',
     'CustomParts/LargeListFirstAidKit/templates/tpl',
     'css!CustomParts/LargeListFirstAidKit/styles/main.css',
-    'css!//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'
+    'css!CustomParts/LargeListFirstAidKit/styles/bootstrap.css',
 ], function(jQuery, ListService, Constants, NotificationController, SearchController, Templates) {
 
     //expose the controller. The anchor tag contains click events that call the controller.
